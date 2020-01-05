@@ -1,4 +1,4 @@
-package main.java;
+package com.gabmonteiro.cubegame;
 
 import sun.audio.AudioPlayer;
 import sun.audio.AudioStream;

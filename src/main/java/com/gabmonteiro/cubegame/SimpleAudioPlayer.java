@@ -1,5 +1,4 @@
-package main.java;
-
+package com.gabmonteiro.cubegame;
 // Java program to play an Audio
 // file using Clip Object
 

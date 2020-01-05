@@ -1,4 +1,4 @@
-package main.java;
+package com.gabmonteiro.cubegame;
 
 import java.awt.*;
 
