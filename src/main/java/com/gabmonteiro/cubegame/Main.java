@@ -29,6 +29,7 @@ public class Main extends Canvas implements Runnable, KeyListener {
 	public static Enemy enemy = new Enemy(100,100);
 
 	public List<Enemy> enemies = new ArrayList<Enemy>();
+	public List<Bullet> bullets = new ArrayList<Bullet>();
 	
 	public BufferedImage layer = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_RGB);
 	
@@ -73,7 +74,6 @@ public class Main extends Canvas implements Runnable, KeyListener {
 	
 	public void fps() {
 		player.fps();
-		//enemy.fps();
 	}
 	
 	public void render() {
@@ -85,17 +85,21 @@ public class Main extends Canvas implements Runnable, KeyListener {
 		Graphics g = layer.getGraphics();
 		g.setColor(Color.black);
 		g.fillRect(0, 0, WIDTH, HEIGHT);
-
-		g.setFont(new Font("Arial", 20, 20));
-		g.setColor(Color.white);
-		g.drawString("Kills: "+enemiesDie, 15, 30);
 		
 		player.render(g);
 
 		for (Enemy enemy : enemies) {
 			enemy.render(g);
 		}
-	
+
+		for (Bullet bullet : bullets) {
+			bullet.render(g);
+		}
+
+		g.setFont(new Font("Arial", 20, 20));
+		g.setColor(Color.white);
+		g.drawString("Kills: "+enemiesDie, 15, 30);
+
 		g = bs.getDrawGraphics();
 		g.drawImage(layer, 0, 0, WIDTH, HEIGHT, null);
 		bs.show();
@@ -158,7 +162,34 @@ public class Main extends Canvas implements Runnable, KeyListener {
 		}
 	}
 
-	@Override
+	public void removeSeABalaSairDoMapa() {
+		Iterator<Bullet> iterator = bullets.iterator();
+		while(iterator.hasNext()) {
+			iterator.remove();
+		}
+	}
+
+	private void atiraCima() {
+
+	}
+
+	private void atiraBaixo() {
+
+	}
+
+	private void atiraEsquerda() {
+
+	}
+
+	private void atiraDireita() {
+
+	}
+
+	private void geraBala(int x, int y) {
+
+	}
+
+
 	public void keyPressed(KeyEvent arg0) {
 		if(arg0.getKeyCode() == KeyEvent.VK_W) {
 			player.up = true;
