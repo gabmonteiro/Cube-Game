@@ -206,6 +206,23 @@ public class Main extends Canvas implements Runnable, KeyListener {
 		if(arg0.getKeyCode() == KeyEvent.VK_A) {
 			player.left = true;
 		}
+
+
+		if(arg0.getKeyCode() == KeyEvent.VK_UP) {
+		    atiraCima();
+        }
+
+		if(arg0.getKeyCode() == KeyEvent.VK_DOWN) {
+		    atiraBaixo();
+        }
+
+		if(arg0.getKeyCode() == KeyEvent.VK_RIGHT) {
+		    atiraDireita();
+        }
+
+		if(arg0.getKeyCode() == KeyEvent.VK_LEFT) {
+		    atiraEsquerda();
+        }
 	}
 
 	@Override

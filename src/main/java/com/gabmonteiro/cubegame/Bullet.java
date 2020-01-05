@@ -14,6 +14,11 @@ public class Bullet {
     public Bullet(int x, int y) {
         state = new Rectangle(x, y, width, height);
     }
+
+    public Rectangle getState() {
+        return state;
+    }
+
     public void fps() {
         if(state.getLocation().y < -100) {
             main.removeSeABalaSairDoMapa();

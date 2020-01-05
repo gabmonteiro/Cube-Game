@@ -32,6 +32,10 @@ public class Player {
 		return state.getBounds().intersects(enemy);
 	}
 
+	public Rectangle getState() {
+		return state;
+	}
+
 	public void fps() {
 		if(left == true) moveEsquerda();
 		if(right == true) moveDireita();
