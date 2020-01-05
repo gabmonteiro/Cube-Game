@@ -7,4 +7,5 @@ aaaaa
 
 asjapjapojapodjadopjapdoaj
 lkj
-~koç
+~ko
+ajadjapdç
