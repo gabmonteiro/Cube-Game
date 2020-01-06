@@ -4,37 +4,56 @@ import java.awt.*;
 
 public class Bullet {
 
-    public int width = 100;
-    public int height = 100;
+    public static int width = 25;
+    public static int height = 25;
 
-    public Main main;
-
-    public Rectangle state;
+    private Rectangle state;
+    private DirecaoBala direcaoBala;
 
     public Bullet(int x, int y) {
         state = new Rectangle(x, y, width, height);
+    }
+
+    private int getX() {
+        return state.getLocation().x;
+    }
+
+    private int getY() {
+        return state.getLocation().y;
+    }
+
+    private int getWidth() {
+        return state.getSize().width;
+    }
+
+    private int getHeight() {
+        return state.getSize().height;
+    }
+
+    private void moveEsquerda() {
+        state.setLocation(getX() - 10, getY());
+    }
+
+    private void moveDireita() {
+        state.setLocation(getX() + 10, getY());
+    }
+
+    private void moveCima() {
+        state.setLocation(getX(), getY() - 10);
+    }
+
+    private void moveBaixo() {
+        state.setLocation(getX(), getY() + 10);
     }
 
     public Rectangle getState() {
         return state;
     }
 
-    public void fps() {
-        if(state.getLocation().y < -100) {
-            main.removeSeABalaSairDoMapa();
-        }else if(state.getLocation().y > 820) {
-            main.removeSeABalaSairDoMapa();
-        }
-
-        if(state.getLocation().x < -100) {
-            main.removeSeABalaSairDoMapa();
-        }else if(state.getLocation().x > 1380) {
-            main.removeSeABalaSairDoMapa();
-        }
-    }
-
    public void render(Graphics g) {
         g.setColor(Color.red);
-       g.fillRect(state.getLocation().x, state.getLocation().y, state.getSize().width, state.getSize().height);
+       g.fillRect(getX(), getY(), getWidth(),getHeight());
+
+       state.setLocation(getX() + 20, getY());
     }
 }

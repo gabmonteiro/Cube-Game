@@ -170,23 +170,32 @@ public class Main extends Canvas implements Runnable, KeyListener {
 	}
 
 	private void atiraCima() {
-
+        int newX = (int) (player.getState().x + (player.getState().getWidth() / 2) - (Bullet.width / 2));
+        int newY = player.getState().y;
+        geraBala(newX, newY);
 	}
 
 	private void atiraBaixo() {
-
+        int newX = (int) (player.getState().x + (player.getState().getWidth() / 2) - (Bullet.width / 2));
+        int newY = (int) (player.getState().y + player.getState().getHeight() - Bullet.height);
+        geraBala(newX, newY);
 	}
 
 	private void atiraEsquerda() {
-
+        int newX = player.getState().x;
+        int newY = (int) (player.getState().y + (player.getState().getHeight() /2) - (Bullet.height / 2));
+        geraBala(newX,newY);
 	}
 
 	private void atiraDireita() {
-
+        int newX = (int) (player.getState().x + (player.getState().getWidth() - Bullet.width));
+        int newY = (int) (player.getState().y + (player.getState().getHeight() / 2) - (Bullet.height /2));
+        geraBala(newX, newY);
 	}
 
 	private void geraBala(int x, int y) {
-
+		Bullet bullet = new Bullet(x,y);
+		bullets.add(bullet);
 	}
 
 
