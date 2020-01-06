@@ -8,17 +8,17 @@ public class Bullet {
     public static int height = 25;
 
     private Rectangle state;
-    private DirecaoBala direcaoBala;
+    public static DirecaoBala direcaobala;
 
     public Bullet(int x, int y) {
         state = new Rectangle(x, y, width, height);
     }
 
-    private int getX() {
+    public int getX() {
         return state.getLocation().x;
     }
 
-    private int getY() {
+    public int getY() {
         return state.getLocation().y;
     }
 
@@ -54,6 +54,18 @@ public class Bullet {
         g.setColor(Color.red);
        g.fillRect(getX(), getY(), getWidth(),getHeight());
 
+    if(direcaobala == DirecaoBala.CIMA) {
+        moveCima();
+    }
+    if(direcaobala == DirecaoBala.BAIXO) {
+        moveBaixo();
+    }
+    if(direcaobala == DirecaoBala.ESQUERDA) {
+        moveEsquerda();
+    }
+    if(direcaobala == DirecaoBala.DIREITA) {
+        moveDireita();
+    }
 
     }
 }

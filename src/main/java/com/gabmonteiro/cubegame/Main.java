@@ -14,6 +14,8 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import static com.gabmonteiro.cubegame.DirecaoBala.*;
+
 public class Main extends Canvas implements Runnable, KeyListener {
 	
 	private static final long serialVersionUID = 1L;
@@ -75,15 +77,15 @@ public class Main extends Canvas implements Runnable, KeyListener {
 	public void fps() {
 		player.fps();
 
-		if(Bullet.height < -25) {
+		if(Bullet.get() < -25) {
 			removeABala();
-		} else if(Bullet.height > (HEIGHT + 25)) {
+		} else if(Bullet.getY() > (HEIGHT + 25)) {
 			removeABala();
 		}
 
-		if(Bullet.width < -25) {
+		if(Bullet.getX() < -25) {
 			removeABala();
-		} else if(Bullet.width > (WIDTH + 25)) {
+		} else if(Bullet.getX() > (WIDTH + 25)) {
 			removeABala();
 		}
 	}
@@ -184,24 +186,28 @@ public class Main extends Canvas implements Runnable, KeyListener {
 	private void atiraCima() {
         int newX = (int) (player.getState().x + (player.getState().getWidth() / 2) - (Bullet.width / 2));
         int newY = player.getState().y;
+        Bullet.direcaobala = CIMA;
         geraBala(newX, newY);
 	}
 
 	private void atiraBaixo() {
         int newX = (int) (player.getState().x + (player.getState().getWidth() / 2) - (Bullet.width / 2));
         int newY = (int) (player.getState().y + player.getState().getHeight() - Bullet.height);
+        Bullet.direcaobala = BAIXO;
         geraBala(newX, newY);
 	}
 
 	private void atiraEsquerda() {
         int newX = player.getState().x;
         int newY = (int) (player.getState().y + (player.getState().getHeight() /2) - (Bullet.height / 2));
+        Bullet.direcaobala = ESQUERDA;
         geraBala(newX,newY);
 	}
 
 	private void atiraDireita() {
         int newX = (int) (player.getState().x + (player.getState().getWidth() - Bullet.width));
         int newY = (int) (player.getState().y + (player.getState().getHeight() / 2) - (Bullet.height /2));
+        Bullet.direcaobala = DIREITA;
         geraBala(newX, newY);
 	}
 
