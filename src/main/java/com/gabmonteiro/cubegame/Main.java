@@ -74,6 +74,18 @@ public class Main extends Canvas implements Runnable, KeyListener {
 	
 	public void fps() {
 		player.fps();
+
+		if(Bullet.height < -25) {
+			removeABala();
+		} else if(Bullet.height > (HEIGHT + 25)) {
+			removeABala();
+		}
+
+		if(Bullet.width < -25) {
+			removeABala();
+		} else if(Bullet.width > (WIDTH + 25)) {
+			removeABala();
+		}
 	}
 	
 	public void render() {
@@ -162,7 +174,7 @@ public class Main extends Canvas implements Runnable, KeyListener {
 		}
 	}
 
-	public void removeSeABalaSairDoMapa() {
+	public void removeABala() {
 		Iterator<Bullet> iterator = bullets.iterator();
 		while(iterator.hasNext()) {
 			iterator.remove();

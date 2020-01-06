@@ -54,6 +54,6 @@ public class Bullet {
         g.setColor(Color.red);
        g.fillRect(getX(), getY(), getWidth(),getHeight());
 
-       state.setLocation(getX() + 20, getY());
+
     }
 }
