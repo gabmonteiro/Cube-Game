@@ -4,14 +4,15 @@ import java.awt.*;
 
 public class Bullet {
 
-    public static int width = 25;
-    public static int height = 25;
+    public static final int WIDTH = 25;
+    public static final int HEIGHT = 25;
 
     private Rectangle state;
-    public static DirecaoBala direcaobala;
+    private DirecaoBala direcaoBala;
 
-    public Bullet(int x, int y) {
-        state = new Rectangle(x, y, width, height);
+    public Bullet(int x, int y, DirecaoBala direcaoBala) {
+        this.state = new Rectangle(x, y, WIDTH, HEIGHT);
+        this.direcaoBala = direcaoBala;
     }
 
     public int getX() {
@@ -52,20 +53,19 @@ public class Bullet {
 
    public void render(Graphics g) {
         g.setColor(Color.red);
-       g.fillRect(getX(), getY(), getWidth(),getHeight());
+        g.fillRect(getX(), getY(), getWidth(),getHeight());
 
-    if(direcaobala == DirecaoBala.CIMA) {
-        moveCima();
-    }
-    if(direcaobala == DirecaoBala.BAIXO) {
-        moveBaixo();
-    }
-    if(direcaobala == DirecaoBala.ESQUERDA) {
-        moveEsquerda();
-    }
-    if(direcaobala == DirecaoBala.DIREITA) {
-        moveDireita();
-    }
-
+        if(direcaoBala == DirecaoBala.CIMA) {
+            moveCima();
+        }
+        if(direcaoBala == DirecaoBala.BAIXO) {
+            moveBaixo();
+        }
+        if(direcaoBala == DirecaoBala.ESQUERDA) {
+            moveEsquerda();
+        }
+        if(direcaoBala == DirecaoBala.DIREITA) {
+            moveDireita();
+        }
     }
 }

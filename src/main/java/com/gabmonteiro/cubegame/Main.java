@@ -14,8 +14,6 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import static com.gabmonteiro.cubegame.DirecaoBala.*;
-
 public class Main extends Canvas implements Runnable, KeyListener {
 	
 	private static final long serialVersionUID = 1L;
@@ -28,7 +26,6 @@ public class Main extends Canvas implements Runnable, KeyListener {
 	public static SongUtil songUtil = new SongUtil();
 	
 	public static Player player = new Player(350, 350);
-	public static Enemy enemy = new Enemy(100,100);
 
 	public List<Enemy> enemies = new ArrayList<Enemy>();
 	public List<Bullet> bullets = new ArrayList<Bullet>();
@@ -76,18 +73,6 @@ public class Main extends Canvas implements Runnable, KeyListener {
 	
 	public void fps() {
 		player.fps();
-
-		if(Bullet.get() < -25) {
-			removeABala();
-		} else if(Bullet.getY() > (HEIGHT + 25)) {
-			removeABala();
-		}
-
-		if(Bullet.getX() < -25) {
-			removeABala();
-		} else if(Bullet.getX() > (WIDTH + 25)) {
-			removeABala();
-		}
 	}
 	
 	public void render() {
@@ -147,7 +132,8 @@ public class Main extends Canvas implements Runnable, KeyListener {
 				delta--;
 		 	}
 
-			removeSeTiverColisao();
+			removerInimigosComColisaoNoJogador();
+			removeBalaSeSairDoMapa();
 		
 			if(System.currentTimeMillis() - timer >= 1000) {
 				System.out.println("FPS: "+frames);
@@ -165,7 +151,7 @@ public class Main extends Canvas implements Runnable, KeyListener {
 		//songUtil.playRespawnEnemy();
 	}
 
-	private void removeSeTiverColisao() {
+	private void removerInimigosComColisaoNoJogador() {
 		Iterator<Enemy> iterator = enemies.iterator();
 		while(iterator.hasNext()) {
 			if (player.teveColisao(iterator.next().getState())) {
@@ -176,43 +162,50 @@ public class Main extends Canvas implements Runnable, KeyListener {
 		}
 	}
 
-	public void removeABala() {
+	public void removeBalaSeSairDoMapa() {
 		Iterator<Bullet> iterator = bullets.iterator();
 		while(iterator.hasNext()) {
-			iterator.remove();
+			Bullet bullet = iterator.next();
+			if(bullet.getY() < -25) {
+				removeBalaSeSairDoMapa();
+			} else if(bullet.getY() > (HEIGHT + 25)) {
+				removeBalaSeSairDoMapa();
+			}
+
+			if(bullet.getX() < -25) {
+				removeBalaSeSairDoMapa();
+			} else if(bullet.getX() > (WIDTH + 25)) {
+				removeBalaSeSairDoMapa();
+			}
 		}
 	}
 
 	private void atiraCima() {
-        int newX = (int) (player.getState().x + (player.getState().getWidth() / 2) - (Bullet.width / 2));
+        int newX = (int) (player.getState().x + (player.getState().getWidth() / 2) - (Bullet.WIDTH / 2));
         int newY = player.getState().y;
-        Bullet.direcaobala = CIMA;
-        geraBala(newX, newY);
+        geraBala(newX, newY, DirecaoBala.CIMA);
 	}
 
 	private void atiraBaixo() {
-        int newX = (int) (player.getState().x + (player.getState().getWidth() / 2) - (Bullet.width / 2));
-        int newY = (int) (player.getState().y + player.getState().getHeight() - Bullet.height);
-        Bullet.direcaobala = BAIXO;
-        geraBala(newX, newY);
+        int newX = (int) (player.getState().x + (player.getState().getWidth() / 2) - (Bullet.WIDTH / 2));
+        int newY = (int) (player.getState().y + player.getState().getHeight() - Bullet.HEIGHT);
+        geraBala(newX, newY, DirecaoBala.BAIXO);
 	}
 
 	private void atiraEsquerda() {
         int newX = player.getState().x;
-        int newY = (int) (player.getState().y + (player.getState().getHeight() /2) - (Bullet.height / 2));
-        Bullet.direcaobala = ESQUERDA;
-        geraBala(newX,newY);
+        int newY = (int) (player.getState().y + (player.getState().getHeight() /2) - (Bullet.HEIGHT / 2));
+        geraBala(newX,newY, DirecaoBala.ESQUERDA);
 	}
 
 	private void atiraDireita() {
-        int newX = (int) (player.getState().x + (player.getState().getWidth() - Bullet.width));
-        int newY = (int) (player.getState().y + (player.getState().getHeight() / 2) - (Bullet.height /2));
-        Bullet.direcaobala = DIREITA;
-        geraBala(newX, newY);
+        int newX = (int) (player.getState().x + (player.getState().getWidth() - Bullet.WIDTH));
+        int newY = (int) (player.getState().y + (player.getState().getHeight() / 2) - (Bullet.HEIGHT /2));
+        geraBala(newX, newY, DirecaoBala.DIREITA);
 	}
 
-	private void geraBala(int x, int y) {
-		Bullet bullet = new Bullet(x,y);
+	private void geraBala(int x, int y, DirecaoBala direcaoBala) {
+		Bullet bullet = new Bullet(x,y, direcaoBala);
 		bullets.add(bullet);
 	}
 
