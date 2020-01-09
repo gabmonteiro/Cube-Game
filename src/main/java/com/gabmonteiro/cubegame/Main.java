@@ -24,6 +24,7 @@ public class Main extends Canvas implements Runnable, KeyListener {
 	public static boolean isRunning = false;
 	public static int enemiesDie;
 	public static SongUtil songUtil = new SongUtil();
+	private double delayBala = 1;
 	
 	public static Player player = new Player(350, 350);
 
@@ -84,16 +85,16 @@ public class Main extends Canvas implements Runnable, KeyListener {
 		Graphics g = layer.getGraphics();
 		g.setColor(Color.black);
 		g.fillRect(0, 0, WIDTH, HEIGHT);
-		
+
+        for (Enemy enemy : enemies) {
+            enemy.render(g);
+        }
+
+        for (Bullet bullet : bullets) {
+            bullet.render(g);
+        }
+
 		player.render(g);
-
-		for (Enemy enemy : enemies) {
-			enemy.render(g);
-		}
-
-		for (Bullet bullet : bullets) {
-			bullet.render(g);
-		}
 
 		g.setFont(new Font("Arial", 20, 20));
 		g.setColor(Color.white);
@@ -139,6 +140,7 @@ public class Main extends Canvas implements Runnable, KeyListener {
 				System.out.println("FPS: "+frames);
 				frames = 0;
 				timer += 1000;
+				delayBala++;
 			}
 		}
 	}
@@ -148,6 +150,8 @@ public class Main extends Canvas implements Runnable, KeyListener {
 		int randomY = (int)(Math.random() * 620);
 		Enemy randomEnemy = new Enemy(randomX, randomY);
 		enemies.add(randomEnemy);
+		//geraNovoInimigoSeGerarEmCimaDeOutroInimigo();
+        geraNovoInimigoSeGerarEmCimaDoPlayer();
 		//songUtil.playRespawnEnemy();
 	}
 
@@ -162,23 +166,48 @@ public class Main extends Canvas implements Runnable, KeyListener {
 		}
 	}
 
+	/*public void geraNovoInimigoSeGerarEmCimaDeOutroInimigo() {
+	    Iterator<Enemy> iterator = enemies.iterator();
+            while(iterator.hasNext()) {
+                Enemy enemy = iterator.next();
+                iterator.hasNext();
+                Enemy enemy2 = iterator.next();
+                if(enemy.teveColisaoComOutroInimigo(enemy2.getState())) {
+                    geraNovoInimigo();
+                }
+            }
+
+        } */
+
+	public void geraNovoInimigoSeGerarEmCimaDoPlayer() {
+	    Iterator<Enemy> iterator = enemies.iterator();
+	    while(iterator.hasNext()) {
+	        Enemy enemy = iterator.next();
+	    if(player.teveColisao(enemy.getState())) {
+	        iterator.remove();
+	            geraNovoInimigo();
+            }
+        }
+    }
+
 	public void removeBalaSeSairDoMapa() {
 		Iterator<Bullet> iterator = bullets.iterator();
 		while(iterator.hasNext()) {
 			Bullet bullet = iterator.next();
 			if(bullet.getY() < -25) {
-				removeBalaSeSairDoMapa();
+				iterator.remove();
 			} else if(bullet.getY() > (HEIGHT + 25)) {
-				removeBalaSeSairDoMapa();
+				iterator.remove();
 			}
 
 			if(bullet.getX() < -25) {
-				removeBalaSeSairDoMapa();
+				iterator.remove();
 			} else if(bullet.getX() > (WIDTH + 25)) {
-				removeBalaSeSairDoMapa();
+				iterator.remove();
 			}
 		}
 	}
+
 
 	private void atiraCima() {
         int newX = (int) (player.getState().x + (player.getState().getWidth() / 2) - (Bullet.WIDTH / 2));
@@ -205,8 +234,11 @@ public class Main extends Canvas implements Runnable, KeyListener {
 	}
 
 	private void geraBala(int x, int y, DirecaoBala direcaoBala) {
-		Bullet bullet = new Bullet(x,y, direcaoBala);
-		bullets.add(bullet);
+	    if(delayBala > 0.2) {
+            Bullet bullet = new Bullet(x, y, direcaoBala);
+            bullets.add(bullet);
+            delayBala = 0;
+        }
 	}
 
 

@@ -47,6 +47,7 @@ public class Bullet {
         state.setLocation(getX(), getY() + 10);
     }
 
+
     public Rectangle getState() {
         return state;
     }

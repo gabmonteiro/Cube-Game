@@ -16,28 +16,12 @@ public class Enemy {
         return state;
     }
 
-    public void moveEsquerda() {
-        state.setLocation(state.getLocation().x - 10, state.getLocation().y);
-    }
-
-    public void moveDireita() {
-        state.setLocation(state.getLocation().x + 10, state.getLocation().y);
-    }
-
-    public void moveCima() {
-        state.setLocation(state.getLocation().x, state.getLocation().y - 10);
-    }
-
-    public void moveBaixo() {
-        state.setLocation(state.getLocation().x, state.getLocation().y + 10);
+    public boolean teveColisaoComOutroInimigo(Rectangle enemy) {
+        return state.getBounds().intersects(enemy);
     }
 
     public void render(Graphics g) {
         g.setColor(Color.yellow);
         g.fillRect(state.getLocation().x, state.getLocation().y, state.getSize().width, state.getSize().height);
-
-        //if (posicaoCima) {
-            moveCima();
-        //}
     }
 }
