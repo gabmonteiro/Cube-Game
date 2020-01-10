@@ -9,25 +9,33 @@ public class Player {
 	private int speed = 25;
 	
 	private Rectangle state;
+
+	public int getX() {
+		return state.getLocation().x;
+	}
+
+	public int getY() {
+		return state.getLocation().y;
+	}
 	
 	public Player(int x, int y) {
 		state = new Rectangle(x , y, 100, 100);
 	}
 
 	public void moveEsquerda() {
-		state.setLocation(state.getLocation().x - speed, state.getLocation().y);
+		state.setLocation(getX() - speed, getY());
 	}
 
 	public void moveDireita() {
-		state.setLocation(state.getLocation().x + speed, state.getLocation().y);
+		state.setLocation(getX() + speed, getY());
 	}
 
 	public void moveCima() {
-		state.setLocation(state.getLocation().x, state.getLocation().y - speed);
+		state.setLocation(getX(), getY() - speed);
 	}
 
 	public void moveBaixo() {
-		state.setLocation(state.getLocation().x, state.getLocation().y + speed);
+		state.setLocation(getX(), getY() + speed);
 	}
 
 	public boolean teveColisao(Rectangle enemy) {
@@ -44,21 +52,21 @@ public class Player {
 		if(up == true) moveCima();
 		if(down == true) moveBaixo();
 
-		if(state.getLocation().y < -100) {
-			state.setLocation(state.getLocation().x, 820);
-		}else if(state.getLocation().y > 820) {
-			state.setLocation(state.getLocation().x, -100);
+		if(getY() < -100) {
+			state.setLocation(getX(), 820);
+		}else if(getY() > 820) {
+			state.setLocation(getX(), -100);
 		}
 
-		if(state.getLocation().x < -100) {
-			state.setLocation(1380, state.getLocation().y);
-		}else if(state.getLocation().x > 1380) {
-			state.setLocation(-100, state.getLocation().y);
+		if(getX() < -100) {
+			state.setLocation(1380, getY());
+		}else if(getX() > 1380) {
+			state.setLocation(-100, getY());
 		}
 	}
 	
 	public void render(Graphics g) {
 		g.setColor(Color.blue);
-		g.fillRect(state.getLocation().x, state.getLocation().y, state.getSize().width, state.getSize().height);
+		g.fillRect(getX(), getY(), state.getSize().width, state.getSize().height);
 	}
 }

@@ -1,11 +1,7 @@
 package com.gabmonteiro.cubegame;
 
 import javax.swing.JFrame;
-import java.awt.Canvas;
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.Font;
-import java.awt.Graphics;
+import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.image.BufferStrategy;
@@ -25,6 +21,7 @@ public class Main extends Canvas implements Runnable, KeyListener {
 	public static int enemiesDie;
 	public static SongUtil songUtil = new SongUtil();
 	private double delayBala = 1;
+	private boolean gerarInimigo = true;
 	
 	public static Player player = new Player(350, 350);
 
@@ -148,12 +145,24 @@ public class Main extends Canvas implements Runnable, KeyListener {
 	private void geraNovoInimigo() {
 		int randomX = (int)(Math.random() * 1180);
 		int randomY = (int)(Math.random() * 620);
-		Enemy randomEnemy = new Enemy(randomX, randomY);
-		enemies.add(randomEnemy);
-		//geraNovoInimigoSeGerarEmCimaDeOutroInimigo();
-        geraNovoInimigoSeGerarEmCimaDoPlayer();
-		//songUtil.playRespawnEnemy();
+		geraInimigoDenovoSeGerarEmCimaDoPlayer(randomX, randomY);
+		if(gerarInimigo) {
+			Enemy randomEnemy = new Enemy(randomX, randomY);
+			enemies.add(randomEnemy);
+			//songUtil.playRespawnEnemy();
+		}
 	}
+
+	public void geraInimigoDenovoSeGerarEmCimaDoPlayer(int x, int y) {
+		Rectangle rectangle = new Rectangle(x, y, 100, 100);
+		if(rectangle.getBounds().intersects(player.getState()))  {
+			gerarInimigo = false;
+			geraNovoInimigo();
+		} else {
+			gerarInimigo = true;
+		}
+	}
+
 
 	private void removerInimigosComColisaoNoJogador() {
 		Iterator<Enemy> iterator = enemies.iterator();
@@ -166,29 +175,6 @@ public class Main extends Canvas implements Runnable, KeyListener {
 		}
 	}
 
-	/*public void geraNovoInimigoSeGerarEmCimaDeOutroInimigo() {
-	    Iterator<Enemy> iterator = enemies.iterator();
-            while(iterator.hasNext()) {
-                Enemy enemy = iterator.next();
-                iterator.hasNext();
-                Enemy enemy2 = iterator.next();
-                if(enemy.teveColisaoComOutroInimigo(enemy2.getState())) {
-                    geraNovoInimigo();
-                }
-            }
-
-        } */
-
-	public void geraNovoInimigoSeGerarEmCimaDoPlayer() {
-	    Iterator<Enemy> iterator = enemies.iterator();
-	    while(iterator.hasNext()) {
-	        Enemy enemy = iterator.next();
-	    if(player.teveColisao(enemy.getState())) {
-	        iterator.remove();
-	            geraNovoInimigo();
-            }
-        }
-    }
 
 	public void removeBalaSeSairDoMapa() {
 		Iterator<Bullet> iterator = bullets.iterator();
