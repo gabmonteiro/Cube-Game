@@ -47,6 +47,9 @@ public class Bullet {
         state.setLocation(getX(), getY() + 10);
     }
 
+    public boolean teveColisao(Rectangle bullet) {
+        return state.getBounds().intersects(bullet);
+    }
 
     public Rectangle getState() {
         return state;

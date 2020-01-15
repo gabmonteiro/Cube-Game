@@ -13,11 +13,7 @@ public class Enemy {
     }
 
     public Rectangle getState() {
-        return state;
-    }
-
-    public boolean teveColisaoComOutroInimigo(Rectangle enemy) {
-        return state.getBounds().intersects(enemy);
+        return this.state;
     }
 
     public void render(Graphics g) {

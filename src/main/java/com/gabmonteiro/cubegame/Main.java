@@ -132,6 +132,7 @@ public class Main extends Canvas implements Runnable, KeyListener {
 
 			removerInimigosComColisaoNoJogador();
 			removeBalaSeSairDoMapa();
+
 		
 			if(System.currentTimeMillis() - timer >= 1000) {
 				System.out.println("FPS: "+frames);
@@ -167,7 +168,8 @@ public class Main extends Canvas implements Runnable, KeyListener {
 	private void removerInimigosComColisaoNoJogador() {
 		Iterator<Enemy> iterator = enemies.iterator();
 		while(iterator.hasNext()) {
-			if (player.teveColisao(iterator.next().getState())) {
+			Enemy enemy = iterator.next();
+			if (player.teveColisao(enemy.getState())) {
 				iterator.remove();
 				enemiesDie++;
 				songUtil.playKillEnemy();
@@ -190,6 +192,19 @@ public class Main extends Canvas implements Runnable, KeyListener {
 				iterator.remove();
 			} else if(bullet.getX() > (WIDTH + 25)) {
 				iterator.remove();
+			}
+		}
+	}
+
+	public void removeInimigoSeColidirComABala() {
+		Iterator<Bullet> iterator = bullets.iterator();
+		Iterator<Enemy> iterator1 = enemies.iterator();
+		while(iterator1.hasNext()) {
+			Bullet bullet = iterator.next();
+			Enemy enemy = iterator1.next();
+			if(bullet.teveColisao(enemy.getState())) {
+				iterator.remove();
+				iterator1.remove();
 			}
 		}
 	}
@@ -221,7 +236,7 @@ public class Main extends Canvas implements Runnable, KeyListener {
 
 	private void geraBala(int x, int y, DirecaoBala direcaoBala) {
 	    if(delayBala > 0.2) {
-            Bullet bullet = new Bullet(x, y, direcaoBala);
+	    	Bullet bullet = new Bullet(x, y, direcaoBala);
             bullets.add(bullet);
             delayBala = 0;
         }
