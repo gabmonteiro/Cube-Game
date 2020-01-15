@@ -132,6 +132,7 @@ public class Main extends Canvas implements Runnable, KeyListener {
 
 			removerInimigosComColisaoNoJogador();
 			removeBalaSeSairDoMapa();
+			removeInimigoSeColidirComABala();
 
 		
 			if(System.currentTimeMillis() - timer >= 1000) {
@@ -199,12 +200,13 @@ public class Main extends Canvas implements Runnable, KeyListener {
 	public void removeInimigoSeColidirComABala() {
 		Iterator<Bullet> iterator = bullets.iterator();
 		Iterator<Enemy> iterator1 = enemies.iterator();
-		while(iterator1.hasNext()) {
+		while(iterator1.hasNext() && iterator.hasNext()) {
 			Bullet bullet = iterator.next();
 			Enemy enemy = iterator1.next();
 			if(bullet.teveColisao(enemy.getState())) {
 				iterator.remove();
 				iterator1.remove();
+				enemiesDie++;
 			}
 		}
 	}
