@@ -9,6 +9,7 @@ public class Bullet {
 
     private Rectangle state;
     private DirecaoBala direcaoBala;
+    private int speed = 20;
 
     public Bullet(int x, int y, DirecaoBala direcaoBala) {
         this.state = new Rectangle(x, y, WIDTH, HEIGHT);
@@ -32,19 +33,19 @@ public class Bullet {
     }
 
     private void moveEsquerda() {
-        state.setLocation(getX() - 10, getY());
+        state.setLocation(getX() - speed, getY());
     }
 
     private void moveDireita() {
-        state.setLocation(getX() + 10, getY());
+        state.setLocation(getX() + speed, getY());
     }
 
     private void moveCima() {
-        state.setLocation(getX(), getY() - 10);
+        state.setLocation(getX(), getY() - speed);
     }
 
     private void moveBaixo() {
-        state.setLocation(getX(), getY() + 10);
+        state.setLocation(getX(), getY() + speed);
     }
 
     public boolean teveColisao(Rectangle bullet) {

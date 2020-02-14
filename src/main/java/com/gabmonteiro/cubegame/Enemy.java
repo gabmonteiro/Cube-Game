@@ -3,6 +3,7 @@ package com.gabmonteiro.cubegame;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Rectangle;
+import java.util.Iterator;
 
 public class Enemy {
 

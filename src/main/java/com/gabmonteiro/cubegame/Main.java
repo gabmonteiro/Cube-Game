@@ -21,7 +21,6 @@ public class Main extends Canvas implements Runnable, KeyListener {
 	public static int enemiesDie;
 	public static SongUtil songUtil = new SongUtil();
 	private double delayBala = 1;
-	private boolean gerarInimigo = true;
 	
 	public static Player player = new Player(350, 350);
 
@@ -130,7 +129,7 @@ public class Main extends Canvas implements Runnable, KeyListener {
 				delta--;
 		 	}
 
-			removerInimigosComColisaoNoJogador();
+			//removerInimigosComColisaoNoJogador();
 			removeBalaSeSairDoMapa();
 			removeInimigoSeColidirComABala();
 
@@ -147,26 +146,14 @@ public class Main extends Canvas implements Runnable, KeyListener {
 	private void geraNovoInimigo() {
 		int randomX = (int)(Math.random() * 1180);
 		int randomY = (int)(Math.random() * 620);
-		geraInimigoDenovoSeGerarEmCimaDoPlayer(randomX, randomY);
-		if(gerarInimigo) {
 			Enemy randomEnemy = new Enemy(randomX, randomY);
 			enemies.add(randomEnemy);
 			//songUtil.playRespawnEnemy();
-		}
-	}
-
-	public void geraInimigoDenovoSeGerarEmCimaDoPlayer(int x, int y) {
-		Rectangle rectangle = new Rectangle(x, y, 100, 100);
-		if(rectangle.getBounds().intersects(player.getState()))  {
-			gerarInimigo = false;
-			geraNovoInimigo();
-		} else {
-			gerarInimigo = true;
-		}
 	}
 
 
-	private void removerInimigosComColisaoNoJogador() {
+
+	/*private void removerInimigosComColisaoNoJogador() {
 		Iterator<Enemy> iterator = enemies.iterator();
 		while(iterator.hasNext()) {
 			Enemy enemy = iterator.next();
@@ -176,7 +163,7 @@ public class Main extends Canvas implements Runnable, KeyListener {
 				songUtil.playKillEnemy();
 			}
 		}
-	}
+	} */
 
 
 	public void removeBalaSeSairDoMapa() {
@@ -199,14 +186,16 @@ public class Main extends Canvas implements Runnable, KeyListener {
 
 	public void removeInimigoSeColidirComABala() {
 		Iterator<Bullet> iterator = bullets.iterator();
-		Iterator<Enemy> iterator1 = enemies.iterator();
-		while(iterator1.hasNext() && iterator.hasNext()) {
+		while (iterator.hasNext()) {
 			Bullet bullet = iterator.next();
-			Enemy enemy = iterator1.next();
-			if(bullet.teveColisao(enemy.getState())) {
-				iterator.remove();
-				iterator1.remove();
-				enemiesDie++;
+			for (int i = 0; i < enemies.size(); i++) {
+				Enemy enemy = enemies.get(i);
+
+				if (bullet.teveColisao(enemy.getState())) {
+					iterator.remove();
+					enemies.remove(enemy);
+					enemiesDie++;
+				}
 			}
 		}
 	}
@@ -237,7 +226,7 @@ public class Main extends Canvas implements Runnable, KeyListener {
 	}
 
 	private void geraBala(int x, int y, DirecaoBala direcaoBala) {
-	    if(delayBala > 0.2) {
+	    if(delayBala > 0.03) {
 	    	Bullet bullet = new Bullet(x, y, direcaoBala);
             bullets.add(bullet);
             delayBala = 0;

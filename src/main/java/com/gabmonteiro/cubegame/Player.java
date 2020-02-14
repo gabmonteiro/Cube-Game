@@ -6,7 +6,7 @@ public class Player {
 
 	public boolean left, right, up, down;
 
-	private int speed = 25;
+	private int speed = 15;
 	
 	private Rectangle state;
 
